@@ -144,23 +144,16 @@ class NetworkController{
                 
                 var GitHubUsers = [GitHubUser]()
                 
-                println(">>>>>>>>1>>>>>>>>>>>>>>>>>>>>>>>>>")
-                
                 
                 for item in itemsArray {
-                  println(">>>>>>>>>>2>>>>>>>>>>>>>>>>>>>>>>>")
 
                   let aGitHubUser = GitHubUser(jsonDictionary: item)
-                  println(">>>>>>>>>>>>3>>>>>>>>>>>>>>>>>>>>>")
 
                  
                   GitHubUsers.append(aGitHubUser)
-                  println(">>>>>>>>>>>>>4>>>>>>>>>>>>>>>>>>>>")
-
                   
                 }
                 
-                println(">>>>>>>>>>>>>>>>5>>>>>>>>>>>>>>>>>")
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                   callback(GitHubUsers,"")
                 })
@@ -248,20 +241,22 @@ class NetworkController{
           case 200...299:
             
             if let jsonDictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String : AnyObject] {
-              
-            println("executing....1.")
-              
+
               if let itemsArray = jsonDictionary["items"] as? [[String : AnyObject]] {
             
-                println("executing.....2")
+
                 var GitHubUsers = [GitHubUser]()
                 
-                println("executing....3")
+                
                 for item in itemsArray {
-                  println("executing....4.")
+                  
+                  //being returned different data, need to update Model
                   let aGitHubUser = GitHubUser(jsonDictionary: item)
                   
-                  GitHubUsers.append(aGitHubUser)                }
+                  
+                  GitHubUsers.append(aGitHubUser)
+                
+                }
                 
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                   callback(GitHubUsers,"")
