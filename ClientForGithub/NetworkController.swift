@@ -211,28 +211,26 @@ class NetworkController{
     //grab users for collection view
   func fetchUsersForSearchTerm(searchTerm : String, callback : ([GitHubUser]?, String?) -> (Void)) {
     
-    println("fetchUsersForSearchTerm")
+    
     
     let url = NSURL(string: "https://api.github.com/search/users?q=\(searchTerm)")
-    
-    println("url: \(url)")
     
     let at: (AnyObject?) = (NSUserDefaults.standardUserDefaults().objectForKey(self.accessTokenUserDefaultsKey))!
     
     let AccesTokenStringValue: String = ("\(at!)")
-    
-    println("retrieved AccesTokenStringValue = \(AccesTokenStringValue)")
+        //println("retrieved AccesTokenStringValue = \(AccesTokenStringValue)")
 
+    
+      //set up query
     let request = NSMutableURLRequest(URL: url!)
     
     request.setValue("token \(AccesTokenStringValue)", forHTTPHeaderField: "Authorization")
     
     
-    println("creating data task with request: \(request)")
+      //send it
     
     let dataTask = self.urlSession.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
       if error == nil {
-        
         
         
         
@@ -250,37 +248,27 @@ class NetworkController{
                 
                 for item in itemsArray {
                   
-                  //being returned different data, need to update Model
+                  
                   let aGitHubUser = GitHubUser(jsonDictionary: item)
                   
-                  //if there's no image grab it
+                  
+                    //update each GitHubUser's object with their avatar image's url
                   if ( aGitHubUser.gitHubUserAvatarImage == nil ) {
+                  
                     
-                    println("there's no image, must grab it from url:  = \(aGitHubUser.gitHubUserAvatarURL)")
-                    
-                    NetworkController.sharedNetworkController.fetchAvatarImageForRepoOwner(aGitHubUser.gitHubUserAvatarURL, completionHandler: { (retrievedImage) -> (Void) in
-                      
-                      println("returning retrievedImage \(retrievedImage)")
-                      
                         aGitHubUser.setGitHubUserAvatarImage(aGitHubUser.gitHubUserAvatarURL)
-                      
-                      
+                    
+                      //add the updated object back to the deck
                       GitHubUsers.append(aGitHubUser)
-                      
-                    })
                     
                   }
                   
                   
                 }
                 
-                println("grabbed \(itemsArray.count) user urls")
-                
-                
-                
-                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    //add to subprocess
+                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                   callback(GitHubUsers,"")
-                  
                   
                   
                 })
@@ -305,40 +293,6 @@ class NetworkController{
   
   
   
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}//eo class
 
 

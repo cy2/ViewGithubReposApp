@@ -46,7 +46,7 @@ Wednesday
 -Done
 
 2) Upon clicking on a cell, implement a custom transition, and transition the image clicked on to a UserDetailViewController page that has their picture, name, and whatever other info you want pulled from their API. 
--Almost there
+~~In progress
 
 Thursday
 

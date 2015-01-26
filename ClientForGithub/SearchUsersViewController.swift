@@ -44,14 +44,13 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-    println("Loading \(GitHubUsers.count) cells for table view")
     return GitHubUsers.count
     
     
   }
   
 
-  
+    //shows a collection of avatar images for users
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     
     
@@ -59,39 +58,27 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
     
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("USER_CELL", forIndexPath: indexPath) as UserCell
     
-        //clear it out to begin with
+        //clear the image view out to begin with
         cell.imageView.image = nil
     
     
-    var gitHubUser = GitHubUsers[indexPath.row]
+    if (GitHubUsers.count > 0 ){
     
-      //if there's no image grab it
-      if ( gitHubUser.gitHubUserAvatarImage == nil ) {
-
-        println("there's no image, must grab it from url:  = \(gitHubUser.gitHubUserAvatarURL)")
-        
+    
+        var gitHubUser = GitHubUsers[indexPath.row]
+    
+          //Grab the image using the url reference stored in the gitHubUser object")
         NetworkController.sharedNetworkController.fetchAvatarImageForRepoOwner(gitHubUser.gitHubUserAvatarURL, completionHandler: { (retrievedImage) -> (Void) in
   
           
   
-          //update the cell value, upate the image value in the object and update the object in the array
+          //update the image view in the cell with the retrieved image
           cell.imageView.image = retrievedImage
   
-  
-          gitHubUser.gitHubUserAvatarImage = retrievedImage
-          self.GitHubUsers[indexPath.row] = gitHubUser
-  
-  
         })
-  
-      }//else show it
-      else {
-        println("gitHubUser.gitHubUserAvatarImage = \(gitHubUser.gitHubUserAvatarImage)")
-        
-        cell.imageView.image = gitHubUser.gitHubUserAvatarImage
-        
-      }
-
+      
+      
+    }
     
     return cell
   
@@ -105,18 +92,16 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
     searchBar.resignFirstResponder()
     
       //grab the user name
-    println("\(searchBar.text) was entered in search bar")
+      println("\(searchBar.text) was entered in search bar")
     
       //return the repo user objects for that user name
     NetworkController.sharedNetworkController.fetchUsersForSearchTerm(searchBar.text, callback: { (GitHubUsers, errorDescription) -> (Void) in
       
-      if ( errorDescription == nil ) {
+      if ( errorDescription == "" ) {
         
         self.GitHubUsers = GitHubUsers!
-        println("Got \( self.GitHubUsers.count ) repos")
         
         
-        // Swift
         let count = self.GitHubUsers.count
         
         
@@ -125,15 +110,12 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
           
           //grab a repo
           var aGitHubUser = self.GitHubUsers[i]
-          println("aGitHubUser\( aGitHubUser )")
           
           //update the avatar image reference
           aGitHubUser.setGitHubUserAvatarImage(aGitHubUser.gitHubUserAvatarURL)
-          println("set the image reference: \( aGitHubUser.getGitHubUserAvatarImage())")
           
           //add it back to the list of repos
           self.GitHubUsers[i] = aGitHubUser
-          println("Adding  \( self.GitHubUsers[i] ) back to deck")
           
           
         }
@@ -187,9 +169,9 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   }
   
   
-//
+
   
-  
+    //make sure to validate query strings going to github server
   func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
     return text.validate()
   }

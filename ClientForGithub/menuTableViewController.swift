@@ -10,17 +10,19 @@ import UIKit
 
 class menuTableViewController: UITableViewController {
   
-  
-  //var networkController : NetworkController!
+
   
   
   override func viewDidLoad() {
+    println("menuTableViewController: viewDidLoad()")
     super.viewDidLoad()
     
   }
   
   // on load - ask Github for token
   override func viewDidAppear(animated: Bool) {
+    println("menuTableViewController: viewDidAppear()")
+    
     super.viewDidAppear(animated)
     
     //once we get back to the main screen, tell the nav controller we dont want to be the delegate anymore
