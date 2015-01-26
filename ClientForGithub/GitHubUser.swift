@@ -6,17 +6,18 @@
 //  Copyright (c) 2015 cm2y. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-struct GitHubUser {
+class GitHubUser {
   
   
   
-  let gitHubUserId : String
+  //let gitHubUserId : String
   
   let gitHubUserName : String
   
-  let gitHubUserRepo : NSDictionary
+  //let gitHubUserRepo : NSDictionary
   
   let gitHubUserRepoDescription: String
   
@@ -30,21 +31,105 @@ struct GitHubUser {
   
   
   init(jsonDictionary : [String : AnyObject]) {
-    println(jsonDictionary)
+
     
-    self.gitHubUserRepo = jsonDictionary["owner"] as NSDictionary
+    if( jsonDictionary["name"] == nil){
+      
+      self.gitHubUserName = ""
+      
+    }else{
+      self.gitHubUserName = jsonDictionary["name"] as String
+    }
+    
+    
+    
+    //if description is not in the json return an empty string
+    
+    if( jsonDictionary["login"] == nil){
+      
+      self.gitHubUserName = ""
+      
+    }else{
+      self.gitHubUserName = jsonDictionary["login"] as String
+      
+    }
+    
+
+    
+      //if description is not in the json return an empty string
+    
+    if( jsonDictionary["description"] == nil){
+    
+      self.gitHubUserRepoDescription = ""
+    
+    }else{
+        self.gitHubUserRepoDescription = jsonDictionary["description"] as String
+    
+    }
+    
+    
+
+    
+    if( jsonDictionary["description"] == nil){
+      
+      self.gitHubUserRepoLocationURL = ""
+      
+    }else{
+      self.gitHubUserRepoLocationURL = jsonDictionary["html_url"] as String
+      
+    }
+    
+    
+    
+    if( jsonDictionary["avatar_url"] == nil){
+      
+      self.gitHubUserAvatarURL = ""
+      
+    }else{
+      self.gitHubUserAvatarURL = jsonDictionary["avatar_url"] as String
+    }
+    
   
-    self.gitHubUserName = jsonDictionary["name"] as String
     
-    self.gitHubUserRepoDescription = jsonDictionary["description"] as String
+    //self.gitHubUserRepo = jsonDictionary["owner"] as NSDictionary
+    //self.gitHubUserId = String(gitHubUserRepo["id"] as Int)
+    //self.gitHubUserAvatarURL = String(gitHubUserRepo["avatar_url"] as String)
     
-    self.gitHubUserRepoLocationURL = jsonDictionary["html_url"] as String
     
-    self.gitHubUserId = String(gitHubUserRepo["id"] as Int)
     
-    self.gitHubUserAvatarURL = String(gitHubUserRepo["avatar_url"] as String)
-  
   }
+  
+
+  
+  
+  func setGitHubUserAvatarImage(grabbedImageURL: String ) {
+
+    let userAvatarURLStr = self.gitHubUserAvatarURL
+    
+    //assign the image value to the cell
+    if let userAvatarURL = NSURL(string: userAvatarURLStr) {
+      
+      //convert url to data object
+      if let imageData = NSData(contentsOfURL: userAvatarURL) {
+        
+        let gitHubUserAvatarImage = UIImage(data: imageData)
+        self.gitHubUserAvatarImage = gitHubUserAvatarImage
+        
+      }
+      
+    }
+    
+    
+  }
+
+  
+  
+  
+  func getGitHubUserAvatarImage() -> UIImage{
+    
+    return self.gitHubUserAvatarImage!
+  }
+
   
 
 }

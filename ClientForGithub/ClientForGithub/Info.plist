@@ -23,7 +23,7 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
+			<key>CFBundleURLIconFile</key>
 			<string>com.codefellows.cmy</string>
 			<key>CFBundleURLSchemes</key>
 			<array>

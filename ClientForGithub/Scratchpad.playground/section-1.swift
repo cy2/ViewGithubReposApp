@@ -7,9 +7,30 @@ import UIKit
 
 
 
+Github server pings and response data sets
+-------------------------------------------------------------------
+
+Server: GITHUB API TOC  https://developer.github.com/v3/
+
+-------------------------------------------------------------------
+
+Create a client a/c @ Github
+https://github.com/settings/applications/162797
 
 
-Single Repo JSON output
+-------------------------------------------------------------------
+
+Start Authentication Token
+
+
+
+
+-------------------------------------------------------------------
+
+Single Repo JSON output from URL: search repositories
+https://developer.github.com/v3/search/#search-repositories
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 dictionary : [owner: {
@@ -44,13 +65,30 @@ releases_url: https://api.github.com/repos/Hextris/hextris/releases{/id}, open_i
 
 
 
+
+-------------------------------------------------------------------
+
+Single Repo JSON output from URL: search user
+
+https://api.github.com/search/users?q=bob
+
+
+
 [
 followers_url: https://api.github.com/users/bob/followers, 
 repos_url: https://api.github.com/users/bob/repos, 
 site_admin: 0, 
 login: bob, 
 received_events_url: https://api.github.com/users/bob/received_events, type: User, 
-organizations_url: https://api.github.com/users/bob/orgs, starred_url: https://api.github.com/users/bob/starred{/owner}{/repo}, id: 1436, subscriptions_url: https://api.github.com/users/bob/subscriptions, events_url: https://api.github.com/users/bob/events{/privacy}, score: 40.15731, following_url: https://api.github.com/users/bob/following{/other_user}, gists_url: https://api.github.com/users/bob/gists{/gist_id}, avatar_url: https://avatars.githubusercontent.com/u/1436?v=3, gravatar_id: , html_url: https://github.com/bob, url: https://api.github.com/users/bob]
+organizations_url: https://api.github.com/users/bob/orgs, 
+starred_url: https://api.github.com/users/bob/starred
+{/owner}
+{/repo},
+id: 1436, 
+subscriptions_url: https://api.github.com/users/bob/subscriptions, events_url: https://api.github.com/users/bob/events
+{/privacy}, 
+score: 40.15731, 
+following_url: https://api.github.com/users/bob/following{/other_user}, gists_url: https://api.github.com/users/bob/gists{/gist_id}, avatar_url: https://avatars.githubusercontent.com/u/1436?v=3, gravatar_id: , html_url: https://github.com/bob, url: https://api.github.com/users/bob]
 
 
 

@@ -23,7 +23,7 @@ class NetworkController{
   
   var urlSession : NSURLSession
   let clientID = "c65a3f16e5a3f9d186b8"
-  let clientSecret = "34a30a5d63638cd351d7a61542bfbf17ff2a29a3"
+  let clientSecret = "fff8a570fb08afcd5bfbcb705dcb286e24a7edf6"
   let accessTokenUserDefaultsKey = "accessToken"
   var accessToken : String?
   let imageQueue = NSOperationQueue()
@@ -253,13 +253,36 @@ class NetworkController{
                   //being returned different data, need to update Model
                   let aGitHubUser = GitHubUser(jsonDictionary: item)
                   
+                  //if there's no image grab it
+                  if ( aGitHubUser.gitHubUserAvatarImage == nil ) {
+                    
+                    println("there's no image, must grab it from url:  = \(aGitHubUser.gitHubUserAvatarURL)")
+                    
+                    NetworkController.sharedNetworkController.fetchAvatarImageForRepoOwner(aGitHubUser.gitHubUserAvatarURL, completionHandler: { (retrievedImage) -> (Void) in
+                      
+                      println("returning retrievedImage \(retrievedImage)")
+                      
+                        aGitHubUser.setGitHubUserAvatarImage(aGitHubUser.gitHubUserAvatarURL)
+                      
+                      
+                      GitHubUsers.append(aGitHubUser)
+                      
+                    })
+                    
+                  }
                   
-                  GitHubUsers.append(aGitHubUser)
-                
+                  
                 }
+                
+                println("grabbed \(itemsArray.count) user urls")
+                
+                
                 
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                   callback(GitHubUsers,"")
+                  
+                  
+                  
                 })
 
                 
@@ -285,42 +308,6 @@ class NetworkController{
 }
 
 
-//NOTES:
-//GITHUB API TOC IS https://developer.github.com/v3/
-// Search API       https://developer.github.com/v3/search/#search-repositories
-
-
-
-/*
-
-Grab data from result
-
-
-}
-}
-
-
-
-
-
-//NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-//completionHandler(myGitHubRepoResultSet, nil)
-// })
-
-//pass the loaded tweets array back to main thread
-//println("Have retrieved \(myGitHubRepoResultSet.count)tweets")
-
-
-
-Client ID
-c65a3f16e5a3f9d186b8
-Client Secret
-6bc6a7f33004afb36c879b64630a2b2d8a0fdd00
-
-  //https://github.com/settings/applications/162797
-
-
-*/
 
 
 

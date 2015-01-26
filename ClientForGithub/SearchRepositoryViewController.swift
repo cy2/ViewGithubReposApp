@@ -37,6 +37,7 @@ class SearchRepositoryViewController: UIViewController, UITableViewDataSource, U
     self.searchRepositoryVCtableView.delegate = self
     
     self.searchRepositoryVCsearchBar.delegate = self
+    self.searchRepositoryVCsearchBar.text = "Tetris"
     
     
     //create a singleton network controller and add it to the app deligate
@@ -85,36 +86,6 @@ class SearchRepositoryViewController: UIViewController, UITableViewDataSource, U
       
     return cell
 
-  
-  
-  
-  
-//    //if there's no image grab it
-//    if GitHubUser.gitHubUserAvatarImage == nil {
-//      
-//      println("image url is \(GitHubUser.gitHubUserAvatarURL)")
-//      
-//      
-//      NetworkController.sharedNetworkController.fetchAvatarImageForRepoOwner(GitHubUser.gitHubUserAvatarURL, completionHandler: { (retrievedImage) -> (Void) in
-//        
-//        
-//        //update the cell value, upate the image value in the object and update the object in the array
-//        cell.imageView.image = retrievedImage
-//        
-//        
-//        GitHubUser.gitHubUserAvatarImage = retrievedImage
-//        GitHubUsers[indexPath.row] = GitHubUser
-//        
-//        
-//      })
-//      
-//    }//else show it
-//    else {
-//      cell.imageView.image = GitHubUser.gitHubUserAvatarImage
-//    }
-//    //update class variable with new data
-//    self.GitHubUsers = GitHubUsers
-  
   }
  
   

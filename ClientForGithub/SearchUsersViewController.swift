@@ -55,7 +55,7 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     
     
-    
+    println("reloading page data")
     
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("USER_CELL", forIndexPath: indexPath) as UserCell
     
@@ -68,13 +68,11 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
       //if there's no image grab it
       if ( gitHubUser.gitHubUserAvatarImage == nil ) {
 
+        println("there's no image, must grab it from url:  = \(gitHubUser.gitHubUserAvatarURL)")
         
-        
-        println("image url is \(gitHubUser.gitHubUserAvatarURL)")
-  
-  
         NetworkController.sharedNetworkController.fetchAvatarImageForRepoOwner(gitHubUser.gitHubUserAvatarURL, completionHandler: { (retrievedImage) -> (Void) in
   
+          
   
           //update the cell value, upate the image value in the object and update the object in the array
           cell.imageView.image = retrievedImage
@@ -88,6 +86,8 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   
       }//else show it
       else {
+        println("gitHubUser.gitHubUserAvatarImage = \(gitHubUser.gitHubUserAvatarImage)")
+        
         cell.imageView.image = gitHubUser.gitHubUserAvatarImage
         
       }
@@ -104,9 +104,10 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   func searchBarSearchButtonClicked(searchBar: UISearchBar) {
     searchBar.resignFirstResponder()
     
-    //grab search term
+      //grab the user name
     println("\(searchBar.text) was entered in search bar")
     
+      //return the repo user objects for that user name
     NetworkController.sharedNetworkController.fetchUsersForSearchTerm(searchBar.text, callback: { (GitHubUsers, errorDescription) -> (Void) in
       
       if ( errorDescription == nil ) {
@@ -114,6 +115,29 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
         self.GitHubUsers = GitHubUsers!
         println("Got \( self.GitHubUsers.count ) repos")
         
+        
+        // Swift
+        let count = self.GitHubUsers.count
+        
+        
+        //for each repo, set the reference to grab the image for the collection view
+        for var i = 0; i < count; i++ {
+          
+          //grab a repo
+          var aGitHubUser = self.GitHubUsers[i]
+          println("aGitHubUser\( aGitHubUser )")
+          
+          //update the avatar image reference
+          aGitHubUser.setGitHubUserAvatarImage(aGitHubUser.gitHubUserAvatarURL)
+          println("set the image reference: \( aGitHubUser.getGitHubUserAvatarImage())")
+          
+          //add it back to the list of repos
+          self.GitHubUsers[i] = aGitHubUser
+          println("Adding  \( self.GitHubUsers[i] ) back to deck")
+          
+          
+        }
+
         self.collectionView.reloadData()
         
       }
@@ -175,3 +199,32 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   
   
 }//eo classs
+
+
+
+
+//    //if there's no image grab it
+//    if GitHubUser.gitHubUserAvatarImage == nil {
+//
+//      println("image url is \(GitHubUser.gitHubUserAvatarURL)")
+//
+//
+//      NetworkController.sharedNetworkController.fetchAvatarImageForRepoOwner(GitHubUser.gitHubUserAvatarURL, completionHandler: { (retrievedImage) -> (Void) in
+//
+//
+//        //update the cell value, upate the image value in the object and update the object in the array
+//        cell.imageView.image = retrievedImage
+//
+//
+//        GitHubUser.gitHubUserAvatarImage = retrievedImage
+//        GitHubUsers[indexPath.row] = GitHubUser
+//
+//
+//      })
+//
+//    }//else show it
+//    else {
+//      cell.imageView.image = GitHubUser.gitHubUserAvatarImage
+//    }
+//    //update class variable with new data
+//    self.GitHubUsers = GitHubUsers
