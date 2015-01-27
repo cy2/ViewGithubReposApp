@@ -239,7 +239,7 @@
         <!--Search Users View Controller-->
         <scene sceneID="Xb5-89-W4P">
             <objects>
-                <viewController id="8ct-Wq-oJE" customClass="SearchUsersViewController" customModule="ClientForGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchUsersViewController" id="8ct-Wq-oJE" customClass="SearchUsersViewController" customModule="ClientForGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TiM-Lg-FxF"/>
                         <viewControllerLayoutGuide type="bottom" id="7Tk-hC-IvB"/>
@@ -315,10 +315,10 @@
             </objects>
             <point key="canvasLocation" x="-152" y="30"/>
         </scene>
-        <!--User Details View Controller-->
+        <!--User Detail View Controller-->
         <scene sceneID="OmV-97-Jxc">
             <objects>
-                <viewController id="TYX-7Z-Pgy" customClass="UserDetailsViewController" customModule="ClientForGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserDetailViewController" id="TYX-7Z-Pgy" customClass="UserDetailViewController" customModule="ClientForGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="V3y-AV-baE"/>
                         <viewControllerLayoutGuide type="bottom" id="uur-Fe-RG5"/>
@@ -328,7 +328,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W1E-fM-NKP">
-                                <rect key="frame" x="225" y="28" width="150" height="150"/>
+                                <rect key="frame" x="225" y="64" width="150" height="138"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="l1I-Yy-qps"/>
                                 </constraints>
@@ -337,10 +337,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="W1E-fM-NKP" firstAttribute="centerX" secondItem="XdE-gq-fBw" secondAttribute="centerX" id="JPy-1O-jSE"/>
-                            <constraint firstItem="uur-Fe-RG5" firstAttribute="top" secondItem="W1E-fM-NKP" secondAttribute="bottom" constant="422" id="al8-Oq-rkB"/>
+                            <constraint firstItem="W1E-fM-NKP" firstAttribute="top" secondItem="XdE-gq-fBw" secondAttribute="topMargin" constant="64" id="Rf1-OX-DKa"/>
+                            <constraint firstItem="uur-Fe-RG5" firstAttribute="top" secondItem="W1E-fM-NKP" secondAttribute="bottom" constant="398" id="al8-Oq-rkB"/>
                             <constraint firstItem="W1E-fM-NKP" firstAttribute="top" secondItem="XdE-gq-fBw" secondAttribute="topMargin" constant="28" id="utF-CZ-5IE"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="utF-CZ-5IE"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="selectedUserImage" destination="W1E-fM-NKP" id="Yfx-01-axt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jYd-Ej-8RV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

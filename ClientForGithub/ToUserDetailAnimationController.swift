@@ -7,62 +7,79 @@
 //
 import UIKit
 
+
+
+  //a class to create a custom animation: create the transition delegate that retuns the vc and does the animation
 class ToUserDetailAnimationController : NSObject, UIViewControllerAnimatedTransitioning {
-  
-  
+    
   
   func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    //how long the animation should take
     return 0.4
+  
   }
   
+    
+    
   
   func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
     
-    //grab references to both of the view controllers
+    
+    //grab references to the FROM VC
     let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as SearchUsersViewController
     
+    //grab references to the TO VC
     let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as UserDetailViewController
     
+    //create the container view
     let containerView = transitionContext.containerView()
     
-    //find the selected cell and make a snapshot of the imageview that is going to move
-    let selectedIndexPath = fromVC.collectionView.indexPathsForSelectedItems()!.first as NSIndexPath
     
-    let cell = fromVC.collectionView.cellForItemAtIndexPath(selectedIndexPath) as UserCell
+      //setting up the starting position of the image
+        let selectedIndexPath = fromVC.collectionView.indexPathsForSelectedItems()!.first as NSIndexPath
     
-    let snapshotOfCell = cell.imageView.snapshotViewAfterScreenUpdates(false)
-  
-    cell.imageView.hidden = true
+        //find the cell
+        let cell = fromVC.collectionView.cellForItemAtIndexPath(selectedIndexPath) as UserCell
     
-    snapshotOfCell.frame = containerView.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
+        //create a carbon copy of the image to replicate it at it's starting position
+        let snapshotOfCell = cell.imageView.snapshotViewAfterScreenUpdates(false)// show now = false
     
-    //make our toVC start on screen, but with alpha 0
-    toVC.view.frame = transitionContext.finalFrameForViewController(toVC)
+        //hide the origional image, so they dont apprear overlapped
+        cell.imageView.hidden = true
     
-    toVC.view.alpha = 0
+        //give the snapshot view a frame
+        snapshotOfCell.frame = containerView.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
     
-    toVC.imageView.hidden = true
+        //make our toVC start on screen, but with alpha 0
+        toVC.view.frame = transitionContext.finalFrameForViewController(toVC)
     
-    containerView.addSubview(toVC.view)
+        //fade in
+        toVC.view.alpha = 0
     
-    containerView.addSubview(snapshotOfCell)
+        toVC.selectedUserImage.hidden = true
+    
+        containerView.addSubview(toVC.view)
+    
+        containerView.addSubview(snapshotOfCell)
+ 
     
     //telling autolayout to make a pass
     toVC.view.setNeedsLayout()
     toVC.view.layoutIfNeeded()
+    
     
     let duration = self.transitionDuration(transitionContext)
     
     UIView.animateWithDuration(duration, animations: { () -> Void in
       toVC.view.alpha = 1.0
       
-      let frame = containerView.convertRect(toVC.imageView.frame, fromView: toVC.view)
+      let frame = containerView.convertRect(toVC.selectedUserImage.frame, fromView: toVC.view)
       snapshotOfCell.frame = frame
       
       }) { (finished) -> Void in
         
         //clean up
-        toVC.imageView.hidden = false
+        toVC.selectedUserImage.hidden = false
         cell.imageView.hidden = false
         snapshotOfCell.removeFromSuperview()
         transitionContext.completeTransition(true)

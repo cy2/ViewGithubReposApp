@@ -27,7 +27,6 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   
   
   override func viewDidLoad() {
-    println("SearchUsersViewController: viewDidLoad()")
     
     super.viewDidLoad()
 
@@ -53,8 +52,7 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
     //shows a collection of avatar images for users
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     
-    
-    println("reloading page data")
+
     
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("USER_CELL", forIndexPath: indexPath) as UserCell
     
@@ -84,7 +82,6 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   
   }
     
-  
   
   
   //UISearchBarDelegate
@@ -136,6 +133,7 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   //become the deligate for the nav controller
   func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     
+    
     if toVC is UserDetailViewController {
       //return the animation controller
       return ToUserDetailAnimationController()
@@ -153,17 +151,20 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
     //instantiate the desitination for selected image
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     
-    
     if segue.identifier == "SHOW_USER_DETAIL" {
       
+      //leaving Search Users VC
       let fromVC = segue.sourceViewController as SearchUsersViewController
+      
+      //going to UserDetailViewController
       let toVC = segue.destinationViewController as UserDetailViewController
       
+      //grab which cell was clicked
       var selectedIndexPath = fromVC.collectionView.indexPathsForSelectedItems()!.first as NSIndexPath
       
-      
-  
+      //pass it to the toVC
       toVC.selectedUser = self.GitHubUsers[selectedIndexPath.row]
+        println("selected user is \(self.GitHubUsers[selectedIndexPath.row] )")
       
     }
   }
@@ -182,31 +183,3 @@ class SearchUsersViewController: UIViewController, UICollectionViewDataSource, U
   
 }//eo classs
 
-
-
-
-//    //if there's no image grab it
-//    if GitHubUser.gitHubUserAvatarImage == nil {
-//
-//      println("image url is \(GitHubUser.gitHubUserAvatarURL)")
-//
-//
-//      NetworkController.sharedNetworkController.fetchAvatarImageForRepoOwner(GitHubUser.gitHubUserAvatarURL, completionHandler: { (retrievedImage) -> (Void) in
-//
-//
-//        //update the cell value, upate the image value in the object and update the object in the array
-//        cell.imageView.image = retrievedImage
-//
-//
-//        GitHubUser.gitHubUserAvatarImage = retrievedImage
-//        GitHubUsers[indexPath.row] = GitHubUser
-//
-//
-//      })
-//
-//    }//else show it
-//    else {
-//      cell.imageView.image = GitHubUser.gitHubUserAvatarImage
-//    }
-//    //update class variable with new data
-//    self.GitHubUsers = GitHubUsers

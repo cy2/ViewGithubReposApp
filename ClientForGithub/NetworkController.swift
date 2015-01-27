@@ -80,8 +80,6 @@ class NetworkController{
             
             let accessTokenComponent = tokenResponse?.componentsSeparatedByString("&").first as String
             let accessToken = accessTokenComponent.componentsSeparatedByString("=").last
-            println("Access Token = \(accessToken!)")
-            
             
             
             //add the Access Token to the session
@@ -140,7 +138,7 @@ class NetworkController{
               
               if let itemsArray = jsonDictionary["items"] as? [[String : AnyObject]] {
                 
-                println("Grabbing \(itemsArray.count) repos")
+                //println("Grabbing \(itemsArray.count) repos")
                 
                 var GitHubUsers = [GitHubUser]()
                 
@@ -192,7 +190,7 @@ class NetworkController{
   
     //lazy loads the image for a gihub repo URL
   func fetchAvatarImageForRepoOwner(url : String, completionHandler : (UIImage) -> (Void)) {
-    println("Fetching Avatar image from github")
+    //println("Fetching Avatar image from github")
     
     let url = NSURL(string: url)
     

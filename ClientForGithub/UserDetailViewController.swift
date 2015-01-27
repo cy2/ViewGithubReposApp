@@ -10,18 +10,20 @@ import UIKit
 
 class UserDetailViewController: UIViewController {
 
+    @IBOutlet weak var selectedUserImage: UIImageView!
   
   var selectedUser : GitHubUser!
-  
-   @IBOutlet weak var imageView: UIImageView!
 
   
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-      self.imageView.image = selectedUser.gitHubUserAvatarImage
-
-        // Do any additional setup after loading the view.
+        
+        println("person selected is \(selectedUser.gitHubUserName)")
+        
+        self.selectedUserImage.image = selectedUser.getGitHubUserAvatarImage()
+        
+        //add labels for other info about user
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,15 +31,5 @@ class UserDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
