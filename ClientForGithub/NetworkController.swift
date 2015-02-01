@@ -22,8 +22,8 @@ class NetworkController{
  
   
   var urlSession : NSURLSession
-  let clientID = "c65a3f16e5a3f9d186b8"
-  let clientSecret = "fff8a570fb08afcd5bfbcb705dcb286e24a7edf6"
+  let clientID = "hasBeenReset"
+  let clientSecret = "hasBeenResetToo"
   let accessTokenUserDefaultsKey = "accessToken"
   var accessToken : String?
   let imageQueue = NSOperationQueue()
